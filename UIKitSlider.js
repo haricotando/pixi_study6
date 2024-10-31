@@ -1,11 +1,19 @@
 import Utils from './Utils.js';
 
 export class UIKitSlider extends PIXI.Container {
+    /**
+     * 
+     * @param {PIXI.Application} app - PIXIアプリのインスタンス
+     * @param {number} sliderWidth - 作成するSliderの幅
+     * @param {object} targetObject - 対象オブジェクト
+     * @param {string} keyString - 対象パラメータ名
+     * @param {number} minVal - スライダー最小時の値
+     * @param {number} maxVal - スライダー最大時の値
+     * @param {number} [defaultVal=valFrom] - デフォルトの値、指定がなければ最小値
+     * @param {string} label - ラベルを付ける場合
+     */
 
-    /* ============================================================
-        constructor
-    ============================================================ */
-    constructor(app, sliderWidth, valFrom, valTo, defaultVal = this.valFrom, label = false) {
+    constructor(app, sliderWidth, valFrom, valTo, defaultVal = valFrom, label = false) {
         super();
 
         this.val = defaultVal;
