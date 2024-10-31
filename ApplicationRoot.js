@@ -32,31 +32,37 @@ export class ApplicationRoot extends PIXI.Container {
         this.addChild(guide);
         Utils.pivotCenter(guide);
         const resize = Utils.resizeImage(guide, dp.spRect);
+        this.makeText();
+        // const slider = this.addChild(new UIKitSlider(dp.app, dp.spRect.width, 0, 100));
+        // slider.x = 0 - dp.limitedScreen.halfWidth;
     }
+
+
     makeText(){
-        const background = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color: 0xE6E1DE});
-        this.addChild(background);
-        Utils.pivotCenter(background);
 
         const comaStyle = new PIXI.TextStyle({
             fontFamily        : 'Inter',
-            fontSize          : 100,
+            fontSize          : 280,
             fontWeight        : 600,
             fill              : ['#ffffff', '#00ff99'],   // gradient
-            stroke            : '#4a1850',
+            stroke            : '0xFF0000',
             strokeThickness   : 5,
-            dropShadow        : true,
-            dropShadowColor   : '#000000',
-            dropShadowBlur    : 4,
-            dropShadowAngle   : Math.PI / 6,
-            dropShadowDistance: 6,
-            wordWrap          : true,
-            wordWrapWidth     : 440,
-            lineJoin          : 'round',
+            // dropShadow        : true,
+            // dropShadowColor   : '#000000',
+            // dropShadowBlur    : 4,
+            // dropShadowAngle   : Math.PI / 6,
+            // dropShadowDistance: 6,
+            // letterSpacing     : 2,
+            // wordWrap          : true,
+            // wordWrapWidth     : 440,
+            // lineJoin          : 'round',
         });
 
-        const comaText = new PIXI.Text('Basic text in pixi', comaStyle);
+        const comaText = new PIXI.Text('COMA', comaStyle);
         this.addChild(comaText);
+        comaText.x = -450;
+        comaText.y = -320;
+        // comaText.alpha = 0.5;
 
     }
 

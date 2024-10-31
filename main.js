@@ -36,9 +36,11 @@ function init(){
         resizeTo  : window,
         /**
          * @todo 高解像度端末の対応について調べる
+         * これonにしたらメモリが圧迫して、
+         * [Warning] Total canvas memory use exceeds the maximum limit (224 MB)とシミュレーターで怒られた
          */
-        resolution: window.devicePixelRatio || 1,
-        autoDensity: true,
+        // resolution: window.devicePixelRatio || 1,
+        // autoDensity: true,
     });
     
     dataProvider.app = app;
@@ -50,10 +52,14 @@ function init(){
         dataProvider.spRect = new PIXI.Rectangle(0, 0, 980, 1668);
     }
     dataProvider.limitedScreen = {
-        width     : dataProvider.spRect.width,
-        height    : dataProvider.spRect.height,
-        halfWidth : dataProvider.spRect.width / 2,
-        halfHeight: dataProvider.spRect.height / 2,
+        width             : dataProvider.spRect.width,
+        height            : dataProvider.spRect.height,
+        halfWidth         : dataProvider.spRect.width / 2,
+        halfHeight        : dataProvider.spRect.height / 2,
+        // negativeWidth     : 0 - dataProvider.spRect.width,
+        // negativeHeight    : 0 - dataProvider.spRect.height,
+        // negativeHalfWidth : 0 - dataProvider.spRect.width / 2,
+        // negativeHalfHeight: 0 - dataProvider.spRect.height / 2,
     };
 
     document.body.appendChild(app.view);

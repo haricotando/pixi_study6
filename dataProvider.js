@@ -12,10 +12,14 @@ export const dataProvider = {
      * Rectangleとは別にSPサイズ縛りを入れる
      */
     limitedScreen: {
-        width     : undefined,
-        height    : undefined,
-        halfWidth : undefined,
-        halfHeight: undefined,
+        width             : undefined,
+        height            : undefined,
+        halfWidth         : undefined,
+        halfHeight        : undefined,
+        negativeWidth     : undefined,
+        negativeHeight    : undefined,
+        negativeHalfWidth : undefined,
+        negativeHalfHeight: undefined,
     },
 
     assets: {},
