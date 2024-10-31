@@ -32,9 +32,6 @@ export class ApplicationRoot extends PIXI.Container {
         this.addChild(guide);
         Utils.pivotCenter(guide);
         const resize = Utils.resizeImage(guide, dp.spRect);
-        console.log(resize);
-        guide.width = resize.width;
-        guide.height = resize.height;
     }
     makeText(){
         const background = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color: 0xE6E1DE});

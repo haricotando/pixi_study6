@@ -24,6 +24,72 @@ class Utils {
         return navigator.userAgent.match(/iPhone|Android.+Mobile/) ? true : false;
     }
 
+    /** ============================================================
+     * 画像のリサイズ / レート計算
+     */
+    /**
+     * 画像をリサイズする関数
+     * @param {Object} image - 元の画像サイズオブジェクト { width: number, height: number }
+     * @param {Object} frame - 枠のサイズオブジェクト { width: number, height: number }
+     * @param {string} option - リサイズオプション "fit", "contain", "cover"
+     * @returns {Object} - リサイズ後の幅と高さ { width: number, height: number }
+     */
+    static calcScaleToFrame(image, frame, option = 'cover'){
+        let newWidth, newHeight;
+        const imgAspectRatio = image.width / image.height;
+        const frameAspectRatio = frame.width / frame.height;
+
+        switch (option) {
+            case "fit":  // A: 比率無視で枠にフィット
+                newWidth = frame.width;
+                newHeight = frame.height;
+                break;
+            
+            case "contain":  // B: 比率維持で枠内に収める（余白あり）
+                if (imgAspectRatio > frameAspectRatio) {
+                    newWidth = frame.width;
+                    newHeight = frame.width / imgAspectRatio;
+                } else {
+                    newWidth = frame.height * imgAspectRatio;
+                    newHeight = frame.height;
+                }
+                break;
+            
+            case "cover":  // C: 比率維持で枠を完全に埋める（余白なし）
+                if (imgAspectRatio > frameAspectRatio) {
+                    newWidth = frame.height * imgAspectRatio;
+                    newHeight = frame.height;
+                } else {
+                    newWidth = frame.width;
+                    newHeight = frame.width / imgAspectRatio;
+                }
+                break;
+
+            default:
+                throw new Error("Invalid option. Use 'fit', 'contain', or 'cover'.");
+        }
+        
+        return { width: newWidth, height: newHeight };
+    }
+
+    /** ============================================================
+     * calcScaleToFrameのラッパー
+     */
+    /**
+     * 画像をリサイズする関数
+     * @param {Object} image - 元の画像サイズオブジェクト { width: number, height: number }
+     * @param {Object} frame - 枠のサイズオブジェクト { width: number, height: number }
+     * @param {string} option - リサイズオプション "fit", "contain", "cover"
+     * @returns {Object} - リサイズ後の幅と高さ { width: number, height: number }
+     */
+
+    static resizeImage(image, frame, option = 'cover'){
+        const res = this.calcScaleToFrame(image, frame, option);
+        image.width = res.width;
+        image.height = res.height;
+        
+    }
+
 
 
 
@@ -121,67 +187,6 @@ class Utils {
 
     ############################################################ */
 
-    /**
-     * 画像をリサイズする関数
-     * @param {Object} image - 元の画像サイズオブジェクト { width: number, height: number }
-     * @param {Object} frame - 枠のサイズオブジェクト { width: number, height: number }
-     * @param {string} option - リサイズオプション "fit", "contain", "cover"
-     * @returns {Object} - リサイズ後の幅と高さ { width: number, height: number }
-     */
-    static resizeImage(image, frame, option = 'cover') {
-        let newWidth, newHeight;
-        const imgAspectRatio = image.width / image.height;
-        const frameAspectRatio = frame.width / frame.height;
-
-        switch (option) {
-            case "fit":  // A: 比率無視で枠にフィット
-                newWidth = frame.width;
-                newHeight = frame.height;
-                break;
-            
-            case "contain":  // B: 比率維持で枠内に収める（余白あり）
-                if (imgAspectRatio > frameAspectRatio) {
-                    newWidth = frame.width;
-                    newHeight = frame.width / imgAspectRatio;
-                } else {
-                    newWidth = frame.height * imgAspectRatio;
-                    newHeight = frame.height;
-                }
-                break;
-            
-            case "cover":  // C: 比率維持で枠を完全に埋める（余白なし）
-                if (imgAspectRatio > frameAspectRatio) {
-                    newWidth = frame.height * imgAspectRatio;
-                    newHeight = frame.height;
-                } else {
-                    newWidth = frame.width;
-                    newHeight = frame.width / imgAspectRatio;
-                }
-                break;
-
-            default:
-                throw new Error("Invalid option. Use 'fit', 'contain', or 'cover'.");
-        }
-        
-        return { width: newWidth, height: newHeight };
-    }
-
-
-    static fitWidth(w, h, max, byScale){
-        const maxW = max;
-        const maxH = max;
-        const tmpWidth = maxW;
-        const resizeRate = maxW / w;
-        const tmpHeight = Math.round(h * resizeRate);
-                                
-        const tmpScaleX = tmpWidth / maxW;
-        const tmpScaleY = tmpHeight / maxH;
-        if(byScale) {
-            return [tmpScaleX, tmpScaleY];
-        }else {
-            return [tmpWidth, tmpHeight];
-        }
-    }
 
 
 
