@@ -1,5 +1,6 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import { UIKitSlider } from "./UIKitSlider.js";
+import { UIKitToggleButton } from "./UIKitToggleButton.js";
 
 class Utils {
     /** ------------------------------------------------------------
@@ -155,12 +156,13 @@ class Utils {
      * @param {number} maxVal - スライダー最大時の値
      * @param {number} [defaultVal=minVal] - デフォルトの値、指定がなければ最小値
      * @param {string} label - ラベルを付ける場合
+     * @returns 
      * 
      * @example
      * DisplacementFilterのscale調整スケールの作成
      * 0 to 200、デフォルト100
      * 
-     * const slider = Utils.addUISlider(dataProvider.app, dataProvider.spRect.width, displacementFilter, 'scale', 0, 200, 100, 'Filter');
+     * const slider = Utils.addUISlider(dp.app, dataProvider.spRect.width, displacementFilter, 'scale', 0, 200, 100, 'Filter');
      * this.addChild(displacementSlider);
      * 
      */
@@ -178,6 +180,27 @@ class Utils {
             }
         });
         return slider;
+    }
+
+    /**
+     * UIToggleButton のインスタンス作成とイベント設定を簡易にする
+     * @param {*} app 
+     * @param {*} targetObject 
+     * @param {*} keyString 
+     * @param {*} defaultVal 
+     * @param {*} label 
+     * @returns 
+     * 
+     * @example
+     * const toggle = Utils.addUIToggleButton(dp.app, background, 'visible', true, 'background');
+     * this.addChild(toggle);
+     */
+    static addUIToggleButton(app, targetObject, keyString, defaultVal = false, label = false){
+        const button = new UIKitToggleButton(app, defaultVal, label);
+        button.on('customEvent', (data) => {
+            targetObject[keyString] = data.value;
+        });
+        return button;
     }
 
 

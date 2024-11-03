@@ -56,10 +56,10 @@ function init(){
         height            : dataProvider.spRect.height,
         halfWidth         : dataProvider.spRect.width / 2,
         halfHeight        : dataProvider.spRect.height / 2,
-        // negativeWidth     : 0 - dataProvider.spRect.width,
-        // negativeHeight    : 0 - dataProvider.spRect.height,
-        // negativeHalfWidth : 0 - dataProvider.spRect.width / 2,
-        // negativeHalfHeight: 0 - dataProvider.spRect.height / 2,
+        negativeWidth     : 0 - dataProvider.spRect.width,
+        negativeHeight    : 0 - dataProvider.spRect.height,
+        negativeHalfWidth : 0 - dataProvider.spRect.width / 2,
+        negativeHalfHeight: 0 - dataProvider.spRect.height / 2,
     };
 
     document.body.appendChild(app.view);
