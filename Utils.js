@@ -25,6 +25,9 @@ class Utils {
         return navigator.userAgent.match(/iPhone|Android.+Mobile/) ? true : false;
     }
 
+
+
+
     /** ============================================================
      * 画像のリサイズ / レート計算
      */
@@ -118,8 +121,26 @@ class Utils {
         }
     }
 
-
-
+    /**
+     * ベースTextStyleから複製して使い回す
+     * @param {PIXI.TextStyle} originalStyle - コピー元スタイル 
+     * @param {*} opt - 変更・追加要素
+     * @returns - コピーとオプションを反映したスタイル
+     * 
+     * @example
+     * const cloned = Utils.cloneTextStyle(style, {fontSize: 100});
+     *  -> return
+     *      PIXI.TextStyle
+     */
+    static cloneTextStyle(originalStyle, opt) {
+        const cloned = new PIXI.TextStyle(JSON.parse(JSON.stringify(originalStyle)));
+        if(opt){
+            for (const key in opt) {
+                cloned[key] = opt[key];
+            }
+        }
+        return cloned;
+    }
 
     /** ============================================================
      * Math
@@ -184,11 +205,11 @@ class Utils {
 
     /**
      * UIToggleButton のインスタンス作成とイベント設定を簡易にする
-     * @param {*} app 
-     * @param {*} targetObject 
-     * @param {*} keyString 
-     * @param {*} defaultVal 
-     * @param {*} label 
+     * @param {PIXI.Application} app - PIXIアプリのインスタンス
+     * @param {object} targetObject - 対象オブジェクト
+     * @param {string} keyString - 対象パラメータ名
+     * @param {bool} defaultVal - デフォルトの値
+     * @param {string} label - ラベルをつける場合
      * @returns 
      * 
      * @example

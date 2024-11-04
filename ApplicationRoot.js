@@ -1,6 +1,8 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./helper/GraphicsHelper.js";
+import { Pseudo3DText } from "./Pseudo3DText.js";
 import { UIKitSlider } from "./UIKitSlider.js";
+import { UIKitToggleButton } from "./UIKitToggleButton.js";
 import Utils from "./Utils.js";
 
 export class ApplicationRoot extends PIXI.Container {
@@ -19,7 +21,6 @@ export class ApplicationRoot extends PIXI.Container {
         if(this._debug){
             this.debugAssets = this.addChild(new PIXI.Container());
             this.debugAssets.zIndex = 1000;
-            this.debugAssets.addChild(GraphicsHelper.addCross(100, 10));
             this.initSPFrame();
         }
     }
@@ -28,13 +29,31 @@ export class ApplicationRoot extends PIXI.Container {
      * アセット読み込み等完了後スタート
     */
     init(){
+        const background = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xE6E1DE});
+        Utils.pivotCenter(background);
+        this.addChild(background);
         const guide = PIXI.Sprite.from(dataProvider.assets.designGuide);
         this.addChild(guide);
         Utils.pivotCenter(guide);
         const resize = Utils.resizeImage(guide, dp.spRect);
         this.makeText();
-        // const slider = this.addChild(new UIKitSlider(dp.app, dp.spRect.width, 0, 100));
-        // slider.x = 0 - dp.limitedScreen.halfWidth;
+        
+        const pseudoText = this.addChild(new Pseudo3DText());
+
+        this.addChild(Utils.addUIToggleButton(dp.app, pseudoText, 'visible', true, 'text'));
+        let backgroundToggle = this.addChild(Utils.addUIToggleButton(dp.app, guide, 'visible', true, 'background'));
+        backgroundToggle.y = 100;
+
+        // const background = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xefefef}));
+        // Utils.pivotCenter(background);
+
+        // let objA = {x:0, y:0};
+        // const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.limitedScreen.width - 50, objA, 'x', 0, 100, 50, "objA.x"));
+        // uiSlider.x = dp.limitedScreen.negativeHalfWidth + 25;
+
+        // const uiToggle = this.addChild(Utils.addUIToggleButton(dp.app, background, 'visible', true, 'background'));
+        // uiToggle.x = dp.limitedScreen.negativeHalfWidth + 25;
+        // uiToggle.y = 100;
     }
 
 
@@ -42,7 +61,7 @@ export class ApplicationRoot extends PIXI.Container {
 
         const comaStyle = new PIXI.TextStyle({
             fontFamily        : 'Inter',
-            fontSize          : 280,
+            fontSize          : 280 / 2,
             fontWeight        : 600,
             fill              : ['#ffffff', '#00ff99'],   // gradient
             stroke            : '0xFF0000',
@@ -62,7 +81,7 @@ export class ApplicationRoot extends PIXI.Container {
         this.addChild(comaText);
         comaText.x = -450;
         comaText.y = -320;
-        // comaText.alpha = 0.5;
+        comaText.alpha = 0.5;
 
     }
 

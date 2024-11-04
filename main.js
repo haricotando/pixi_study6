@@ -51,6 +51,9 @@ function init(){
         // ここでSP画面のRectangleを指定する
         dataProvider.spRect = new PIXI.Rectangle(0, 0, 980, 1668);
     }
+
+    console.log(window.innerWidth, window.innerHeight);
+    
     dataProvider.limitedScreen = {
         width             : dataProvider.spRect.width,
         height            : dataProvider.spRect.height,
