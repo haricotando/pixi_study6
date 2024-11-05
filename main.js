@@ -15,7 +15,7 @@ console.log(PIXI.VERSION)
 ------------------------------------------------------------ */
 WebFont.load({
     google: {
-        families: ['Inter:600'],
+        families: ['Inter:100,600,800,900'],
     },
     
     active: () => {

@@ -1,6 +1,7 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./helper/GraphicsHelper.js";
 import { Pseudo3DText } from "./Pseudo3DText.js";
+import { StudycaseText } from "./StudycaseText.js";
 import { UIKitSlider } from "./UIKitSlider.js";
 import { UIKitToggleButton } from "./UIKitToggleButton.js";
 import Utils from "./Utils.js";
@@ -29,20 +30,22 @@ export class ApplicationRoot extends PIXI.Container {
      * アセット読み込み等完了後スタート
     */
     init(){
+        // const background = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0x999999});
         const background = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xE6E1DE});
         Utils.pivotCenter(background);
         this.addChild(background);
         const guide = PIXI.Sprite.from(dataProvider.assets.designGuide);
-        this.addChild(guide);
-        Utils.pivotCenter(guide);
+        // this.addChild(guide);
+        // Utils.pivotCenter(guide);
         const resize = Utils.resizeImage(guide, dp.spRect);
-        this.makeText();
+        // this.makeText();
         
-        const pseudoText = this.addChild(new Pseudo3DText());
+        this.addChild(new StudycaseText());
 
-        this.addChild(Utils.addUIToggleButton(dp.app, pseudoText, 'visible', true, 'text'));
-        let backgroundToggle = this.addChild(Utils.addUIToggleButton(dp.app, guide, 'visible', true, 'background'));
-        backgroundToggle.y = 100;
+
+
+        // let backgroundToggle = this.addChild(Utils.addUIToggleButton(dp.app, guide, 'visible', true, 'background'));
+        // backgroundToggle.y = 100;
 
         // const background = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xefefef}));
         // Utils.pivotCenter(background);
