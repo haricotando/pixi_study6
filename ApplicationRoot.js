@@ -2,6 +2,7 @@ import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./helper/GraphicsHelper.js";
 import { Pseudo3DText } from "./Pseudo3DText.js";
 import { StudycaseText } from "./StudycaseText.js";
+import { StudycaseText2 } from "./StudycaseText2.js";
 import { UIKitSlider } from "./UIKitSlider.js";
 import { UIKitToggleButton } from "./UIKitToggleButton.js";
 import Utils from "./Utils.js";
@@ -38,9 +39,10 @@ export class ApplicationRoot extends PIXI.Container {
         this.addChild(guide);
         Utils.pivotCenter(guide);
         const resize = Utils.resizeImage(guide, dp.spRect);
-        this.makeText();
+        // this.makeText();
         
         this.addChild(new StudycaseText());
+        this.addChild(new StudycaseText2());
 
         // this.addChild(new Pseudo3DText())
 
