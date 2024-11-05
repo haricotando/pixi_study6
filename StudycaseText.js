@@ -6,6 +6,7 @@ export class StudycaseText extends PIXI.Container {
     constructor() {
         super();
 
+        this.x = -390;
         const text = 'COMA';
         // テキストスタイルを設定（グラデーション風の色をfillに直接指定）
         const textStyle = new PIXI.TextStyle({
@@ -17,6 +18,7 @@ export class StudycaseText extends PIXI.Container {
 
             // fill: ["#ffffff", "#00FFFF"], // グラデーション風に白から灰色へ
               fill: ["#ffffff", "#efefef"], // グラデーション風に白から灰色へ
+            //   fill: ["#E7E0E0", "#D3CDCD"], // グラデーション風に白から灰色へ
             align: "center",
             fillGradientType: 0, // 垂直グラデーション
             fillGradientStops: [0.3, 0.9, 1], // グラデーションの位置
@@ -25,10 +27,10 @@ export class StudycaseText extends PIXI.Container {
         // メインテキスト
         const glowText = new PIXI.Text(text, textStyle);
         this.addChild(glowText);
-        glowText.anchor.set(0.5);
+        // glowText.anchor.set(0.5);
 
         const mainText = new PIXI.Text(text, textStyle);
-        mainText.anchor.set(0.5);
+        // mainText.anchor.set(0.5);
         mainText.x = 0;
         mainText.y = 0;
 
@@ -37,7 +39,7 @@ export class StudycaseText extends PIXI.Container {
         const shadowDepth = 40;
         for (let i = 0; i < shadowDepth; i++) {
         const shadowText = new PIXI.Text(text, shadowTextStyle);
-        shadowText.anchor.set(0.5);
+        // shadowText.anchor.set(0.5);
         shadowText.x = mainText.x - i * 1.5;
         shadowText.y = mainText.y + i * 1.5;
         shadowText.tint = 0x888888; // 暗めの影
@@ -50,9 +52,9 @@ export class StudycaseText extends PIXI.Container {
 
         const glowFilter = new PIXI.filters.DropShadowFilter({
             color: 0xFFFFFF,
-            alpha: 1,
-            blur:4,
-            offset: {x:4, y:-4},
+            alpha: 0.9,
+            blur:8,
+            offset: {x:8, y:-8},
             shadowOnly: true,
         });
         glowText.filters = [glowFilter];

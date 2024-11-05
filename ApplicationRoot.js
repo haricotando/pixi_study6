@@ -35,12 +35,14 @@ export class ApplicationRoot extends PIXI.Container {
         Utils.pivotCenter(background);
         this.addChild(background);
         const guide = PIXI.Sprite.from(dataProvider.assets.designGuide);
-        // this.addChild(guide);
-        // Utils.pivotCenter(guide);
+        this.addChild(guide);
+        Utils.pivotCenter(guide);
         const resize = Utils.resizeImage(guide, dp.spRect);
         // this.makeText();
         
         this.addChild(new StudycaseText());
+
+        // this.addChild(new Pseudo3DText())
 
 
 
@@ -95,7 +97,7 @@ export class ApplicationRoot extends PIXI.Container {
     loadAssets(){
         PIXI.Assets.add('flowerTop', 'https://pixijs.com/assets/flowerTop.png');
         PIXI.Assets.add('eggHead', 'https://pixijs.com/assets/eggHead.png');
-        PIXI.Assets.add('designGuide', './assets/design_guide.png');
+        PIXI.Assets.add('designGuide', './assets/Frame 1.png');
 
 
         const assetsPromise = PIXI.Assets.load([
