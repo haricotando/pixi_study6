@@ -193,12 +193,20 @@ class Utils {
             /**
              * scale.x,y だけのための分岐で気持ち悪いがとりあえずこれで
              */
-            if(keyString == 'scale'){
-                targetObject.scale.x = data.value;
-                targetObject.scale.y = data.value;
+
+            if (/^(scale|tileScale)$/.test(keyString)) {
+                targetObject[keyString].x = data.value;
+                targetObject[keyString].y = data.value;
             }else{
                 targetObject[keyString] = data.value;
             }
+
+            // if(keyString == 'scale' || keyString == 'tileScale'){
+            //     targetObject.scale.x = data.value;
+            //     targetObject.scale.y = data.value;
+            // }else{
+            //     targetObject[keyString] = data.value;
+            // }
         });
         return slider;
     }

@@ -26,69 +26,65 @@ export class ApplicationRoot extends PIXI.Container {
             this.initSPFrame();
         }
     }
+
+
+
     
     /** ------------------------------------------------------------
      * アセット読み込み等完了後スタート
     */
     init(){
-        // const background = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0x999999});
-        const background = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xE6E1DE});
-        Utils.pivotCenter(background);
-        this.addChild(background);
-        const guide = PIXI.Sprite.from(dataProvider.assets.designGuide);
-        this.addChild(guide);
-        Utils.pivotCenter(guide);
-        const resize = Utils.resizeImage(guide, dp.spRect);
-        // this.makeText();
+        /**
+         * 背景グリッド
+         */
+        const backgroundGrid = new PIXI.TilingSprite(
+            dp.assets.backgroundGrid,
+            dp.limitedScreen.width,
+            dp.limitedScreen.height,
+        );
+        backgroundGrid.x = dp.limitedScreen.negativeHalfWidth;
+        backgroundGrid.y = dp.limitedScreen.negativeHalfHeight;
+        this.addChild(backgroundGrid);
         
-        this.addChild(new StudycaseText());
-        this.addChild(new StudycaseText2());
-
-        // this.addChild(new Pseudo3DText())
-
-
-
-        // let backgroundToggle = this.addChild(Utils.addUIToggleButton(dp.app, guide, 'visible', true, 'background'));
-        // backgroundToggle.y = 100;
-
-        // const background = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xefefef}));
-        // Utils.pivotCenter(background);
-
-        // let objA = {x:0, y:0};
-        // const uiSlider = this.addChild(Utils.addUISlider(dp.app, dp.limitedScreen.width - 50, objA, 'x', 0, 100, 50, "objA.x"));
-        // uiSlider.x = dp.limitedScreen.negativeHalfWidth + 25;
-
-        // const uiToggle = this.addChild(Utils.addUIToggleButton(dp.app, background, 'visible', true, 'background'));
-        // uiToggle.x = dp.limitedScreen.negativeHalfWidth + 25;
-        // uiToggle.y = 100;
-    }
-
-
-    makeText(){
-
-        const comaStyle = new PIXI.TextStyle({
-            fontFamily        : 'Inter',
-            fontSize          : 280 / 2,
-            fontWeight        : 600,
-            fill              : ['#ffffff', '#00ff99'],   // gradient
-            stroke            : '0xFF0000',
-            strokeThickness   : 5,
-            // dropShadow        : true,
-            // dropShadowColor   : '#000000',
-            // dropShadowBlur    : 4,
-            // dropShadowAngle   : Math.PI / 6,
-            // dropShadowDistance: 6,
-            // letterSpacing     : 2,
-            // wordWrap          : true,
-            // wordWrapWidth     : 440,
-            // lineJoin          : 'round',
+        // アニメーションテスト
+        let scaleFactor = 2;
+        let direction = -0.01;
+        dp.app.ticker.add(() => {
+            scaleFactor += direction;
+            if (scaleFactor <= 1 || scaleFactor >= 2) direction *= -1;
+            
+            // tileScaleの変更
+            backgroundGrid.tileScale.set(scaleFactor, scaleFactor);
+            
+            // tilePositionの調整
+            backgroundGrid.tilePosition.set(
+                - backgroundGrid.width / 2 * (scaleFactor - 1),
+                - backgroundGrid.height / 2 * (scaleFactor - 1)
+            );
         });
 
-        const comaText = new PIXI.Text('COMA', comaStyle);
-        this.addChild(comaText);
-        comaText.x = -450;
-        comaText.y = -320;
-        comaText.alpha = 0.5;
+
+        const bulgeDefaultRadius = 250;
+        const bulgeDefaultStrength = 1;
+        const bulgePinchFilter = new PIXI.filters.BulgePinchFilter(
+            {
+                center:     [0.5, 0.5],             // 画像の中央に効果を適用
+                radius:     bulgeDefaultRadius,     // 効果の半径
+                strength:   bulgeDefaultStrength,   // 効果の強さ（1で最大膨張、-1で最大縮小）
+            }
+        );
+        backgroundGrid.filters = [bulgePinchFilter];
+        // tilingSprite.visible = false;
+        
+        const bulgeSlider1 = Utils.addUISlider(dataProvider.app, dataProvider.spRect.width - 100, bulgePinchFilter, 'radius', 0, 500, bulgeDefaultRadius, 'Bulge.radius');
+        this.addChild(bulgeSlider1);
+        bulgeSlider1.x = 0 - dataProvider.limitedScreen.halfWidth + 50;
+        bulgeSlider1.y = dataProvider.limitedScreen.halfHeight - 250;
+        
+        const bulgeSlider2 = Utils.addUISlider(dataProvider.app, dataProvider.spRect.width - 100, bulgePinchFilter, 'strength', -5, 5, bulgeDefaultStrength, 'Bulge.strength');
+        this.addChild(bulgeSlider2);
+        bulgeSlider2.x = 0 - dataProvider.limitedScreen.halfWidth + 50;
+        bulgeSlider2.y = dataProvider.limitedScreen.halfHeight - 400;
 
     }
 
@@ -100,14 +96,17 @@ export class ApplicationRoot extends PIXI.Container {
         PIXI.Assets.add('flowerTop', 'https://pixijs.com/assets/flowerTop.png');
         PIXI.Assets.add('eggHead', 'https://pixijs.com/assets/eggHead.png');
         PIXI.Assets.add('designGuide', './assets/Frame 1.png');
-        PIXI.Assets.add('displacement', './assets/displacement_map.png');
+        PIXI.Assets.add('backgroundGrid', './assets/background_grid2.png');
+        // PIXI.Assets.add('displacement', './assets/displacement_map.png');
+        PIXI.Assets.add('displacementImage', './assets/displacement_map.png');
 
 
         const assetsPromise = PIXI.Assets.load([
             'flowerTop',
             'eggHead',
             'designGuide',
-            'displacement',
+            'displacementImage',
+            'backgroundGrid',
         ]);
         
         assetsPromise.then((items) => {

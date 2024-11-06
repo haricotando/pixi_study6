@@ -80,6 +80,48 @@ class GraphicsHelper {
         }
         return graphics;
     }
+
+    /** ------------------------------------------------------------
+     * 六角形を書く（上の面に角がある状態）
+     * @param {number} radius - 六角形の半径
+     * @param {*} line - Linestyleのオプションを配列渡し
+     * @param {*} fill - fillのオプションを配列渡し
+     * @param {boolean} [flatTop = true] - 上面がフラットか角か
+     * @returns {PIXI.Graphics} - 描画された六角形
+     */
+    static drawHexagon(radius = 100, line, fill, flatTop = true){
+        // たぶん 0, 0 以外必要性がないと思うけど
+        const centerX = 0;
+        const centerY = 0;
+        const angleOffset = flatTop ? 0 : Math.PI / 6;
+
+        const hexagon = new PIXI.Graphics();
+        if(line){
+            hexagon.lineStyle(...line);
+        }
+        if(fill){
+            hexagon.beginFill(...fill);
+        }
+                
+        // 最初の頂点を設定
+        hexagon.moveTo(
+            centerX + radius * Math.cos(angleOffset),
+            centerY + radius * Math.sin(angleOffset)
+        );
+
+        // 各頂点を順に描画
+        for (let i = 1; i <= 6; i++) {
+            const angle = (Math.PI / 3) * i + angleOffset;
+            hexagon.lineTo(
+            centerX + radius * Math.cos(angle),
+            centerY + radius * Math.sin(angle)
+            );
+        }
+        return hexagon;
+    }
+
+    
+
     /* ============================================================
         TEMPORARY
     ============================================================ */

@@ -3,6 +3,7 @@ import GraphicsHelper from "./helper/GraphicsHelper.js";
 import { dataProvider, dp } from "./dataProvider.js";
 
 import { ApplicationRoot } from "./ApplicationRoot.js";
+import { FilteredApplicationRoot } from "./FilteredApplicationRoot.js";
 // import { BasicApplicationRoot } from "./BasicApplicationRoot.js";
 
 console.log(PIXI.VERSION)
@@ -67,6 +68,7 @@ function init(){
 
     document.body.appendChild(app.view);
     let appRoot = app.stage.addChild(new ApplicationRoot(true));
+    // let appRoot = app.stage.addChild(new FilteredApplicationRoot());
 /* ------------------------------------------------------------
     resize Event
 ------------------------------------------------------------ */

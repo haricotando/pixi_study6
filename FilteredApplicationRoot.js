@@ -41,7 +41,7 @@ export class FilteredApplicationRoot extends PIXI.Container {
         PIXI.Assets.add('eggHead', 'https://pixijs.com/assets/eggHead.png');
         PIXI.Assets.add('backgroundStar', './assets/star.png');
         PIXI.Assets.add('displacementImage', './assets/displacement_map.png');
-        PIXI.Assets.add('displacementImage2', './assets/map2.png');
+        // PIXI.Assets.add('displacementImage2', './assets/map2.png');
 
         const assetsPromise = PIXI.Assets.load([
             'flowerTop',
@@ -114,11 +114,11 @@ export class FilteredApplicationRoot extends PIXI.Container {
 
         dataProvider.app.ticker.add(() => {
             // displacement filterで波作って
-            displacementSprite.x += 1;
-            displacementSprite.y += 1;
+            // displacementSprite.x += 1;
+            // displacementSprite.y += 1;
             
             // なんとなく雰囲気出す
-            background.rotation += 0.0005;
+            // background.rotation += 0.0005;
         });
     }
 
