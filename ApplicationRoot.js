@@ -34,6 +34,50 @@ export class ApplicationRoot extends PIXI.Container {
      * アセット読み込み等完了後スタート
     */
     init(){
+        const backgroundGrid = new PIXI.TilingSprite(
+            dp.assets.backgroundGrid,
+            dp.limitedScreen.height * 1.2,
+            dp.limitedScreen.height * 1.2,
+        );
+        this.addChild(backgroundGrid);
+        Utils.pivotCenter(backgroundGrid);
+        
+        // Background TL
+        backgroundGrid.tileScale.set(5);
+        const tl = gsap.timeline();
+        tl.to(backgroundGrid.tileScale, {x:0.5, y:0.5, duration: 2, ease:'expo.out', 
+            onUpdate: () => {
+                backgroundGrid.tilePosition.set(
+                    - backgroundGrid.width / 2 * (backgroundGrid.tileScale.x - 1),
+                    - backgroundGrid.height / 2 * (backgroundGrid.tileScale.y - 1)
+            )   ;
+            }
+        });
+        tl.to(backgroundGrid, {rotation: Utils.degreesToRadians(90), duration:1.8, ease:'back.out(1)'}, '<');
+
+        // Bulge FX
+        const bulgeDefaultRadius = 100;
+        const bulgeDefaultStrength = -1;
+        const bulgePinchFilter = new PIXI.filters.BulgePinchFilter(
+            {
+                center:     [0.5, 0.5],
+                radius:     bulgeDefaultRadius,
+                strength:   bulgeDefaultStrength,
+            }
+        );
+        backgroundGrid.filters = [bulgePinchFilter];
+
+        const bulgeTL = gsap.timeline({delay: 0.4});
+        bulgeTL.to(bulgePinchFilter, {strength:2});
+        bulgeTL.to(bulgePinchFilter, {radius:100});
+    }
+
+
+
+
+
+
+    old_init(){
         /**
          * 背景グリッド
          */
@@ -54,7 +98,7 @@ export class ApplicationRoot extends PIXI.Container {
             if (scaleFactor <= 1 || scaleFactor >= 2) direction *= -1;
             
             // tileScaleの変更
-            backgroundGrid.tileScale.set(scaleFactor, scaleFactor);
+            // backgroundGrid.tileScale.set(scaleFactor, scaleFactor);
             
             // tilePositionの調整
             backgroundGrid.tilePosition.set(
@@ -112,6 +156,7 @@ export class ApplicationRoot extends PIXI.Container {
         assetsPromise.then((items) => {
             dataProvider.assets = items;
             this.init();
+            // this.old_init();
         });
     }
 

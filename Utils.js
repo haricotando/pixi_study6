@@ -64,7 +64,7 @@ class Utils {
                     newWidth = frame.height * imgAspectRatio;
                     newHeight = frame.height;
                 } else {
-                    newWidth = frame.width;
+                    newWidth = frame.width;座標
                     newHeight = frame.width / imgAspectRatio;
                 }
                 break;
@@ -161,8 +161,25 @@ class Utils {
         return parseFloat(number.toFixed(digit));
     }
 
-
-
+    /** ============================================================
+     * Conversion
+     */
+    /** ------------------------------------------------------------
+     * DegreesをRadiansに変換する関数
+     * @param {number} degrees - 角度（度）
+     * @return {number} - ラジアン値
+     */
+    static degreesToRadians(degrees) {
+        return degrees * (Math.PI / 180);
+    }
+    /** ------------------------------------------------------------
+     * RadiansをDegreesに変換する関数
+     * @param {number} radians - ラジアン値
+     * @return {number} - 角度（度）
+     */
+    static radiansToDegrees(radians){
+        return radians * (180 / Math.PI);
+    }
 
     /** ============================================================
      * 自作ライブラリのラッパー
@@ -290,7 +307,6 @@ class Utils {
             width:  target.width,
             height: target.height
         };
-        
     }
 
     // static snapshotState(target){

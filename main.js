@@ -53,8 +53,6 @@ function init(){
         dataProvider.spRect = new PIXI.Rectangle(0, 0, 980, 1668);
     }
 
-    console.log(window.innerWidth, window.innerHeight);
-    
     dataProvider.limitedScreen = {
         width             : dataProvider.spRect.width,
         height            : dataProvider.spRect.height,
@@ -69,6 +67,18 @@ function init(){
     document.body.appendChild(app.view);
     let appRoot = app.stage.addChild(new ApplicationRoot(true));
     // let appRoot = app.stage.addChild(new FilteredApplicationRoot());
+
+    /**
+     * @todo ここ綺麗にしたい
+     */
+    const appRootMask = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width/2, dp.limitedScreen.height/2, false, true);
+    Utils.pivotCenter(appRootMask);
+    app.stage.addChild(appRootMask);
+    appRoot.mask = appRootMask;
+    if(Utils.isMobileDevice()){
+        appRoot.mask = undefined;
+        appRootMask.visible = false;
+    }
 /* ------------------------------------------------------------
     resize Event
 ------------------------------------------------------------ */
@@ -81,6 +91,10 @@ function init(){
         // PC環境ではSPRect範囲内のリサイズ
         if(!Utils.isMobileDevice()){
             appRoot.resizeHandler(w, h);
+
+            appRootMask.x = appRoot.x;
+            appRootMask.y = appRoot.y;
+            appRootMask.scale.set(appRoot.scale.x * 2, appRoot.scale.y * 2);
         }
     });
     app.renderer.emit('resize');
