@@ -34,6 +34,8 @@ export class ApplicationRoot extends PIXI.Container {
      * アセット読み込み等完了後スタート
     */
     init(){
+        // dp.assets.backgroundGrid.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        PIXI.settings.ROUND_PIXELS = true;
         const backgroundGrid = new PIXI.TilingSprite(
             dp.assets.backgroundGrid,
             dp.limitedScreen.height * 1.2,
@@ -41,6 +43,7 @@ export class ApplicationRoot extends PIXI.Container {
         );
         this.addChild(backgroundGrid);
         Utils.pivotCenter(backgroundGrid);
+
         
         // Background TL
         backgroundGrid.tileScale.set(5);
@@ -72,10 +75,25 @@ export class ApplicationRoot extends PIXI.Container {
         bulgeTL.to(bulgePinchFilter, {radius:100});
     }
 
+    initSmoothTest(){
+        const yukkuriTexture = PIXI.Texture.from('https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F2707139%2F9b86d3f7-2c11-29c2-626c-7064579101f8.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=9ee2c21091d93e2a720ebc16fc208db3');
+        yukkuriTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.LINEAR;
+        const yukkuri = this.addChild(new PIXI.Sprite(yukkuriTexture));
+        yukkuri.scale.set(8);
+        
+        const bunnyTexture = PIXI.Texture.from('https://pixijs.com/assets/bunny.png');
+        bunnyTexture.baseTexture.scaleMode = PIXI.SCALE_MODES.NEAREST;
+        const bunny = this.addChild(new PIXI.Sprite(bunnyTexture));
+        bunny.x = -300;
+        bunny.scale.set(8);
+        
+        dp.app.ticker.add(() => {
+            yukkuri.rotation += Utils.degreesToRadians(1);
+        });
 
+        
 
-
-
+    }
 
     old_init(){
         /**
@@ -143,6 +161,8 @@ export class ApplicationRoot extends PIXI.Container {
         PIXI.Assets.add('backgroundGrid', './assets/background_grid2.png');
         // PIXI.Assets.add('displacement', './assets/displacement_map.png');
         PIXI.Assets.add('displacementImage', './assets/displacement_map.png');
+        PIXI.Assets.add('yukkuri', 'https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F2707139%2F9b86d3f7-2c11-29c2-626c-7064579101f8.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=9ee2c21091d93e2a720ebc16fc208db3');
+        PIXI.Assets.add('bunny', 'https://pixijs.com/assets/bunny.png');
 
 
         const assetsPromise = PIXI.Assets.load([
@@ -151,11 +171,13 @@ export class ApplicationRoot extends PIXI.Container {
             'designGuide',
             'displacementImage',
             'backgroundGrid',
+            'yukkuri'
         ]);
         
         assetsPromise.then((items) => {
             dataProvider.assets = items;
-            this.init();
+            this.initSmoothTest();
+            // this.init();
             // this.old_init();
         });
     }
