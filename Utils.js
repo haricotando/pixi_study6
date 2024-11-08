@@ -64,7 +64,7 @@ class Utils {
                     newWidth = frame.height * imgAspectRatio;
                     newHeight = frame.height;
                 } else {
-                    newWidth = frame.width;座標
+                    newWidth = frame.width;
                     newHeight = frame.width / imgAspectRatio;
                 }
                 break;

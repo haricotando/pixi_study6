@@ -84,8 +84,8 @@ class GraphicsHelper {
     /** ------------------------------------------------------------
      * 六角形を書く（上の面に角がある状態）
      * @param {number} radius - 六角形の半径
-     * @param {*} line - Linestyleのオプションを配列渡し
-     * @param {*} fill - fillのオプションを配列渡し
+     * @param {array} line - Linestyleのオプションを配列渡し
+     * @param {array} fill - fillのオプションを配列渡し
      * @param {boolean} [flatTop = true] - 上面がフラットか角か
      * @returns {PIXI.Graphics} - 描画された六角形
      */
