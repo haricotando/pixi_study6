@@ -26,15 +26,11 @@ export class ApplicationRoot extends PIXI.Container {
             this.initSPFrame();
         }
     }
-
-
-
     
     /** ------------------------------------------------------------
      * アセット読み込み等完了後スタート
     */
     init(){
-        // dp.assets.backgroundGrid.scaleMode = PIXI.SCALE_MODES.NEAREST;
         PIXI.settings.ROUND_PIXELS = true;
         const backgroundGrid = new PIXI.TilingSprite(
             dp.assets.backgroundGrid,
@@ -43,24 +39,34 @@ export class ApplicationRoot extends PIXI.Container {
         );
         this.addChild(backgroundGrid);
         Utils.pivotCenter(backgroundGrid);
+        backgroundGrid.tileScale.set(0.5);
 
-        
         // Background TL
-        backgroundGrid.tileScale.set(5);
+        // backgroundGrid.tileScale.set(5);
         const tl = gsap.timeline();
-        tl.to(backgroundGrid.tileScale, {x:0.5, y:0.5, duration: 2, ease:'expo.out', 
+        backgroundGrid.alpha = 0;
+        tl.to(backgroundGrid, {alpha:1, duration:0.5, ease:'none'});
+        tl.to(backgroundGrid.tileScale, {x:0.8, y:0.8, duration: 0.5, ease:'expo.out', 
             onUpdate: () => {
                 backgroundGrid.tilePosition.set(
                     - backgroundGrid.width / 2 * (backgroundGrid.tileScale.x - 1),
                     - backgroundGrid.height / 2 * (backgroundGrid.tileScale.y - 1)
-            )   ;
+            );
+            }
+        }, '<');
+        tl.to(backgroundGrid.tileScale, {x:0.4, y:0.4, duration: 0.7, ease:'expo.inOut', 
+            onUpdate: () => {
+                backgroundGrid.tilePosition.set(
+                    - backgroundGrid.width / 2 * (backgroundGrid.tileScale.x - 1),
+                    - backgroundGrid.height / 2 * (backgroundGrid.tileScale.y - 1)
+            );
             }
         });
-        tl.to(backgroundGrid, {rotation: Utils.degreesToRadians(90), duration:1.8, ease:'back.out(1)'}, '<');
+        // tl.to(backgroundGrid, {rotation: Utils.degreesToRadians(90), duration:2, ease:'back.out(1)'}, '<0.2');
 
         // Bulge FX
-        const bulgeDefaultRadius = 100;
-        const bulgeDefaultStrength = -1;
+        const bulgeDefaultRadius = 0;
+        const bulgeDefaultStrength = 1;
         const bulgePinchFilter = new PIXI.filters.BulgePinchFilter(
             {
                 center:     [0.5, 0.5],
@@ -69,11 +75,40 @@ export class ApplicationRoot extends PIXI.Container {
             }
         );
         backgroundGrid.filters = [bulgePinchFilter];
+        
+        const tlBulge = gsap.timeline({delay:0.1});
+        tlBulge.to(bulgePinchFilter, {radius:600, duration:0.4, ease:'power.out'});
+        tlBulge.to(bulgePinchFilter, {strength:-0.2, duration:0.4, ease:'power.out'}, '<');
+        tlBulge.to(bulgePinchFilter, {radius:240, duration:0.3, ease:'power.inOut'});
+        tlBulge.to(bulgePinchFilter, {strength:1.5, duration:0.3, ease:'power.inOut'}, '<');
 
-        const bulgeTL = gsap.timeline({delay: 0.4});
-        bulgeTL.to(bulgePinchFilter, {strength:2});
-        bulgeTL.to(bulgePinchFilter, {radius:100});
+        tlBulge.to(bulgePinchFilter, {radius:0, duration:1.4, ease:'expo.inIut'});
+        tlBulge.to(bulgePinchFilter, {strength:0, duration:1.4, ease:'expo.inOut'}, '<');
+
+        const hex1 = this.addChild(GraphicsHelper.drawHexagon(300, undefined, [0x666666, 1], false));
+        hex1.alpha = 0;
+        // hex1.rotation = Utils.degreesToRadians(-45);
+        hex1.scale.set(0.1);
+
+        const hexTL = gsap.timeline({delay:0.3});
+        hexTL.to(hex1, {alpha:1, duration:0.4});
+        hexTL.to(hex1.scale, {x:1, y:1, duration:0.6, ease:'back.inOut(2)'}, '<');
+        // hexTL.to(hex1, {rotation:0, duration:0.5, ease:'expo.out'}, '<0.3');
+        hexTL.to(hex1.scale, {x:0.8, y:0.8, duration:0.5, ease:'circ.out'});
+        hexTL.to(hex1.scale, {x:0.2, y:0.2, duration:0.4, ease:'expo.out'});
+        hexTL.to(hex1, {alpha:0, duration:0.3}, '<');
+
     }
+
+
+
+
+
+
+
+
+
+    
 
     initSmoothTest(){
         const yukkuriTexture = PIXI.Texture.from('https://qiita-user-contents.imgix.net/https%3A%2F%2Fqiita-image-store.s3.ap-northeast-1.amazonaws.com%2F0%2F2707139%2F9b86d3f7-2c11-29c2-626c-7064579101f8.png?ixlib=rb-4.0.0&auto=format&gif-q=60&q=75&s=9ee2c21091d93e2a720ebc16fc208db3');
@@ -176,8 +211,8 @@ export class ApplicationRoot extends PIXI.Container {
         
         assetsPromise.then((items) => {
             dataProvider.assets = items;
-            this.initSmoothTest();
-            // this.init();
+            // this.initSmoothTest();
+            this.init();
             // this.old_init();
         });
     }
