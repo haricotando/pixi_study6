@@ -1,9 +1,7 @@
 import { dataProvider, dp } from "./dataProvider.js";
 import GraphicsHelper from "./helper/GraphicsHelper.js";
-import { Pseudo3DText } from "./Pseudo3DText.js";
-import { StudycaseText } from "./StudycaseText.js";
-import { StudycaseText2 } from "./StudycaseText2.js";
-import { UIKitSlider } from "./UIKitSlider.js";
+import { OptimizedCOMA } from "./OptimizedCOMA.js";
+import { TitleCOMA } from "./TitleCOMA.js";
 import { UIKitToggleButton } from "./UIKitToggleButton.js";
 import Utils from "./Utils.js";
 
@@ -30,6 +28,46 @@ export class ApplicationRoot extends PIXI.Container {
     /** ------------------------------------------------------------
      * アセット読み込み等完了後スタート
     */
+    init(){
+        const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xEFEFEF}));
+        Utils.pivotCenter(bg);
+
+        
+        PIXI.settings.ROUND_PIXELS = true;
+        const backgroundGrid = new PIXI.TilingSprite(
+            dp.assets.backgroundGrid,
+            dp.limitedScreen.height * 1.2,
+            dp.limitedScreen.height * 1.2,
+        );
+        this.addChild(backgroundGrid);
+        Utils.pivotCenter(backgroundGrid);
+        backgroundGrid.tileScale.set(0.5);
+
+
+        // const coma = this.addChild(new TitleCOMA())
+        // coma.y = 300;
+        const optComa = this.addChild(new OptimizedCOMA())
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     initA(){
         PIXI.settings.ROUND_PIXELS = true;
         const backgroundGrid = new PIXI.TilingSprite(
@@ -206,13 +244,14 @@ export class ApplicationRoot extends PIXI.Container {
             'designGuide',
             'displacementImage',
             'backgroundGrid',
-            'yukkuri'
+            'yukkuri',
         ]);
         
         assetsPromise.then((items) => {
             dataProvider.assets = items;
+            this.init();
             // this.initSmoothTest();
-            this.initA();
+            // this.initA();
             // this.old_init();
         });
     }
