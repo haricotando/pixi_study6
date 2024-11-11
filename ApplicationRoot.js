@@ -30,7 +30,7 @@ export class ApplicationRoot extends PIXI.Container {
     /** ------------------------------------------------------------
      * アセット読み込み等完了後スタート
     */
-    init(){
+    initA(){
         PIXI.settings.ROUND_PIXELS = true;
         const backgroundGrid = new PIXI.TilingSprite(
             dp.assets.backgroundGrid,
@@ -212,7 +212,7 @@ export class ApplicationRoot extends PIXI.Container {
         assetsPromise.then((items) => {
             dataProvider.assets = items;
             // this.initSmoothTest();
-            this.init();
+            this.initA();
             // this.old_init();
         });
     }
