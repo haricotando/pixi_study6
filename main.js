@@ -91,9 +91,9 @@ function init(){
         if(!Utils.isMobileDevice()){
             appRoot.resizeHandler(w, h);
 
-            appRootMask.x = appRoot.x;
-            appRootMask.y = appRoot.y;
-            appRootMask.scale.set(appRoot.scale.x * 2, appRoot.scale.y * 2);
+            // appRootMask.x = appRoot.x;
+            // appRootMask.y = appRoot.y;
+            // appRootMask.scale.set(appRoot.scale.x * 2, appRoot.scale.y * 2);
         }
     });
     app.renderer.emit('resize');
