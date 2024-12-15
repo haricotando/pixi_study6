@@ -310,11 +310,11 @@ export class ApplicationRoot extends PIXI.Container {
         debugFrame.pivot.y = debugFrame.height/2;
         this.debugAssets.addChild(debugFrame);
 
-        this._labelBackground = GraphicsHelper.exDrawRect(0, 0, 100, 30, false, 0xFFFFFF);
-        this._labelBackground.x = 0 - debugFrame.width / 2 + 20;
-        this._labelBackground.y = 0 - debugFrame.height / 2 + 20;
+        // this._labelBackground = GraphicsHelper.exDrawRect(0, 0, 100, 30, false, 0xFFFFFF);
+        // this._labelBackground.x = 0 - debugFrame.width / 2 + 20;
+        // this._labelBackground.y = 0 - debugFrame.height / 2 + 20;
 
-        this.debugAssets.addChild(this._labelBackground);
+        // this.debugAssets.addChild(this._labelBackground);
         
         this._label = new PIXI.Text('Label');
         this._label.x = 0 - debugFrame.width / 2 + 30;
@@ -325,6 +325,6 @@ export class ApplicationRoot extends PIXI.Container {
 
     updateSPFrame(resizeRatio = 1){
         this._label.text = `${Utils.roundTo(this.width, 1)} : ${Utils.roundTo(this.height, 1) } - ${Utils.roundTo(resizeRatio, 1)}`;
-        this._labelBackground.width = this._label.width + 20;
+        // this._labelBackground.width = this._label.width + 20;
     }
 }

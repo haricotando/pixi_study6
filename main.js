@@ -71,13 +71,13 @@ function init(){
     /**
      * @todo ここ綺麗にしたい
      */
-    const appRootMask = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width/2, dp.limitedScreen.height/2, false, true);
-    Utils.pivotCenter(appRootMask);
-    app.stage.addChild(appRootMask);
-    appRoot.mask = appRootMask;
-    if(Utils.isMobileDevice()){
-        appRoot.mask = undefined;
-    }
+    // const appRootMask = GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width/2, dp.limitedScreen.height/2, false, true);
+    // Utils.pivotCenter(appRootMask);
+    // app.stage.addChild(appRootMask);
+    // appRoot.mask = appRootMask;
+    // if(Utils.isMobileDevice()){
+    //     appRoot.mask = undefined;
+    // }
 /* ------------------------------------------------------------
     resize Event
 ------------------------------------------------------------ */
