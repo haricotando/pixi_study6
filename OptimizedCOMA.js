@@ -3,7 +3,7 @@ import Utils from './Utils.js';
 
 export class OptimizedCOMA extends PIXI.Container {
 
-    constructor(text = '8124') {
+    constructor(text = 'COMA') {
         super();
         this.container = this.addChild(new PIXI.Container());
         this.shadows   = this.container.addChild(new PIXI.Container());
@@ -13,7 +13,7 @@ export class OptimizedCOMA extends PIXI.Container {
         */
         const textStyle = new PIXI.TextStyle({
             fontFamily: 'Inter',
-            fontSize  : 300,
+            fontSize  : 250,
             fontWeight: 800,
             fill      : [0xFFFFFF, 0xEFEFEF],
         //    fill             : [0xEFEFEF, 0xE7E0E0],
@@ -39,9 +39,9 @@ export class OptimizedCOMA extends PIXI.Container {
          * サイドフェイス
          */
         const layers = 10;
-        const sideDepth = 1.5;
-        // let sideStyle = Utils.cloneTextStyle(textStyle, {fill: 0x888888});
-        let sideStyle = Utils.cloneTextStyle(textStyle, {fill: 0xD4D0C8});
+        const sideDepth = 0.75;
+        let sideStyle = Utils.cloneTextStyle(textStyle, {fill: 0x888888});
+        // let sideStyle = Utils.cloneTextStyle(textStyle, {fill: 0xD4D0C8});
         let lastSide = undefined;
         // サイドフェイス幅に合わせて中心寄せ
         for (let i = 0; i < layers; i++) {

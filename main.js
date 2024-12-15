@@ -77,7 +77,6 @@ function init(){
     appRoot.mask = appRootMask;
     if(Utils.isMobileDevice()){
         appRoot.mask = undefined;
-        appRootMask.visible = false;
     }
 /* ------------------------------------------------------------
     resize Event

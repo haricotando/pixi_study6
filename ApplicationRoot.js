@@ -29,7 +29,7 @@ export class ApplicationRoot extends PIXI.Container {
      * アセット読み込み等完了後スタート
     */
     init(){
-        const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xEFEFEF}));
+        const bg = this.addChild(GraphicsHelper.exDrawRect(0, 0, dp.limitedScreen.width, dp.limitedScreen.height, false, {color:0xE2DDDA}));
         Utils.pivotCenter(bg);
 
         
@@ -39,9 +39,9 @@ export class ApplicationRoot extends PIXI.Container {
             dp.limitedScreen.height * 1.2,
             dp.limitedScreen.height * 1.2,
         );
-        this.addChild(backgroundGrid);
-        Utils.pivotCenter(backgroundGrid);
-        backgroundGrid.tileScale.set(0.5);
+        // this.addChild(backgroundGrid);
+        // Utils.pivotCenter(backgroundGrid);
+        // backgroundGrid.tileScale.set(0.5);
 
 
         // const coma = this.addChild(new TitleCOMA())
